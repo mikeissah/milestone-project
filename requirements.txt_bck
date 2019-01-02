@@ -1,0 +1,5 @@
+flask
+gunicorn
+Bootstrap
+simplejson
+flask_bootstrap
