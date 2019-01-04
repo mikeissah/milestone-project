@@ -7,16 +7,16 @@ from bokeh.layouts import gridplot
 from bokeh.plotting import figure
 from bokeh.palettes import Spectral11
 from bokeh.embed import components 
-from bokeh.tile_providers import CARTODBPOSITRON
-from bokeh.sampledata.stocks import AAPL, GOOG, IBM, MSFT
+#from bokeh.tile_providers import CARTODBPOSITRON
+#from bokeh.sampledata.stocks import AAPL, GOOG, IBM, MSFT
 import numpy as np
 
 app = Flask(__name__)
 app.vars={}
 Bootstrap(app)
 
-def datetime(x):
-    return np.array(x, dtype=np.datetime64)
+#def datetime(x):
+#  return np.array(x, dtype=np.datetime64)
 
 @app.route('/')
 def index():
