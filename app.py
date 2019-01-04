@@ -47,4 +47,4 @@ def graph():
         return render_template('graph.html', script=script, div=div)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=33507, debug=True, use_reloader=False)
