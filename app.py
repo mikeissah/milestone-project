@@ -1,38 +1,27 @@
-from flask import Flask, render_template, request, redirect, session
-from flask_bootstrap import Bootstrap
 import requests
 import pandas
 import simplejson as json
-from bokeh.layouts import gridplot
 from bokeh.plotting import figure
-from bokeh.palettes import Spectral11
 from bokeh.embed import components 
-#from bokeh.tile_providers import CARTODBPOSITRON
-#from bokeh.sampledata.stocks import AAPL, GOOG, IBM, MSFT
-import numpy as np
+from flask import Flask,render_template,request,redirect,session
 
 app = Flask(__name__)
-app.vars={}
-Bootstrap(app)
 
-#def datetime(x):
-#  return np.array(x, dtype=np.datetime64)
+app.vars={}
 
 @app.route('/')
+def main():
+  return redirect('/index')
+
+@app.route('/index', methods=['GET'])
 def index():
-  return render_template('index.html')
-
-@app.route('/about')
-def about():
-  return render_template('about.html')
-
+    return render_template('index.html')
+    
 @app.route('/graph', methods=['POST'])
 def graph():
 
-   if request.method == 'POST':
-        app.vars['ticker'] = request.form['ticker']
-        
-        api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=XFqCpJrHuCwSuEs8h94z' % app.vars['ticker']
+        app.vars['ticker'] = request.form['ticker']        
+        api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/{}.json?api_key=XFqCpJrHuCwSuEs8h94z'.format(app.vars['ticker'])
         session = requests.Session()
         session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
         raw_data = session.get(api_url)
@@ -52,9 +41,10 @@ def graph():
             p.line(x=df['Date'].values, y=df['Open'].values,line_width=2, line_color="red", legend='Open')
         if request.form.get('Adj. Open'):
             p.line(x=df['Date'].values, y=df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
+
         script, div = components(p)
+      
         return render_template('graph.html', script=script, div=div)
-        
 
 if __name__ == '__main__':
-  app.run(port=33507)
+    app.run(debug=True)
