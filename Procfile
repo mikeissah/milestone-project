@@ -1,1 +1,1 @@
-web: bokeh serve --port=$PORT --allow-websocket-origin=stock_ticker.herokuapp.com --address=0.0.0.0 --use-xheaders flask-framework
+web: bokeh serve --port=$PORT --num-procs=0 --allow-websocket-origin=myapp.herokuapp.com --address=0.0.0.0 --use-xheaders app.py
