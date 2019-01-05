@@ -29,7 +29,7 @@ def graph():
         a = raw_data.json()
         # Save the stocks data in pandas dataframe
         df = pandas.DataFrame(a['data'], columns=a['column_names'])
-        # Convert data to datetime format for plotting
+        # Convert data to datetime format
         df['Date'] = pandas.to_datetime(df['Date'])
 
         p = figure(title='Stock price variation for {}'.format(app.vars['ticker']), x_axis_label='date', x_axis_type='datetime')
